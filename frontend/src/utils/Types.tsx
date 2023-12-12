@@ -1,24 +1,23 @@
 type ResponseObject = {
   id: number;
   type: string;
-  attributes: Object;
+  attributes: object;
 };
 
 type User = {
-  id: number;
   name: string;
 };
 
 type Discussion = {
+  id: number;
   title: string;
   description: string;
 };
 
 type Reply = {
-  id: number;
   description: string;
   user_id: number;
   discussion_id: number;
 };
 
-export type { ResponseObject, User, Discussion, Reply };
+export type { Discussion, Reply,ResponseObject, User };

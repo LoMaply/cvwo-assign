@@ -5,4 +5,5 @@ const instance = axios.create({
   timeout: 1000,
   headers: {'Access-Control-Allow-Origin': '*'}
 });
+
 export default instance;

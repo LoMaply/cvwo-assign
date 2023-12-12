@@ -1,28 +1,31 @@
-import { useState, useEffect } from 'react';
-import { Discussion, ResponseObject } from '../utils/Types';
-import axios from '../utils/AxiosInstance';
+import "../styles/Home.css";
+
+import { useEffect,useState } from "react";
+
+import axios from "../utils/AxiosInstance";
+import { Discussion, ResponseObject } from "../utils/Types";
+import ThreadList from "../components/ThreadList";
+import { Paper } from "@mui/material";
 
 function Home() {
-  const [threads, setThreads] = useState([]);
+  const [threads, setThreads] = useState<Array<Discussion>>([]);
 
+  // Get list of discussions
   useEffect(() => {
     axios.get('/discussions')
     .then( response => {
-      setThreads(response.data.data)
+      setThreads(response.data.data.map((thread:ResponseObject) => (thread.attributes as Discussion)))
+      console.log(response)
       console.log(response.data.data)
     }).catch(response => console.log(response))
   }, []);
 
 
   return (
-    <div>
-      <ul>
-        {threads.map((thread:ResponseObject, i) => (
-          <li key={i}>{(thread.attributes as Discussion).title}</li>
-        ))}
-      </ul>
-    </div>
+    <Paper elevation={10} sx={{ width: "75%" }} style={{minHeight: "90vh" }} >
+      <ThreadList list={threads} />
+    </Paper>
   );
-};
+}
 
 export default Home;
