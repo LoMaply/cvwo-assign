@@ -1,11 +1,11 @@
 import "../styles/Home.css";
 
-import { useEffect,useState } from "react";
+import { Paper } from "@mui/material";
+import { useEffect, useState } from "react";
 
+import ThreadList from "../components/ThreadList";
 import axios from "../utils/AxiosInstance";
 import { Discussion, ResponseObject } from "../utils/Types";
-import ThreadList from "../components/ThreadList";
-import { Paper } from "@mui/material";
 
 function Home() {
   const [threads, setThreads] = useState<Array<Discussion>>([]);

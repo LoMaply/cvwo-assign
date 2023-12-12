@@ -1,7 +1,7 @@
-import { Button, Stack, Card, CardContent, Typography, CardActionArea, Box, TextField } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardContent, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import { Discussion } from "../utils/Types";
-import { useNavigate } from "react-router-dom";
 
 export default function ThreadList({list} : {list: Array<Discussion>}) {
 

@@ -20,4 +20,4 @@ type Reply = {
   discussion_id: number;
 };
 
-export type { Discussion, Reply,ResponseObject, User };
+export type { Discussion, Reply, ResponseObject, User };

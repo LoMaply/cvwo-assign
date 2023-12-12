@@ -1,9 +1,9 @@
+import { Box } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Home from "./Home";
 import Header from "../components/Header";
 import NewThread from "../components/NewThread";
-import { Box } from "@mui/material";
+import Home from "./Home";
 
 function App() {
   return (
