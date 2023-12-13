@@ -1,9 +1,17 @@
 import axios from 'axios';
 
-const instance = axios.create({
-  baseURL: 'http://127.0.0.1:3000/api',
+const BASE_URL = 'http://127.0.0.1:3000';
+
+const axiosinstance = axios.create({
+  baseURL: BASE_URL,
   timeout: 1000,
   headers: {'Access-Control-Allow-Origin': '*'}
 });
 
-export default instance;
+const authorizedinstance = (token:String) => axios.create({
+  baseURL: BASE_URL,
+  timeout: 1000,
+  headers: {'Access-Control-Allow-Origin': '*', 'Authorization': 'Bearer ' + token}
+})
+
+export { axiosinstance, authorizedinstance };

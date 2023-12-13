@@ -1,5 +1,6 @@
 module Api
   class DiscussionsController < ApplicationController
+    before_action :authorized, only: [:create, :update, :destroy]
 
     def index
       @discussions= Discussion.all

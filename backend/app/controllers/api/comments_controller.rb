@@ -1,6 +1,7 @@
 module Api
   class CommentsController < ApplicationController
-
+    before_action :authorized
+    
     def create
       @comment = Comment.new(comment_params)
 

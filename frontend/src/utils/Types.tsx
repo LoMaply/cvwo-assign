@@ -5,7 +5,8 @@ type ResponseObject = {
 };
 
 type User = {
-  name: string;
+  id: number;
+  username: string;
 };
 
 type Discussion = {
@@ -20,4 +21,11 @@ type Reply = {
   discussion_id: number;
 };
 
+const emptyUser: User = {
+  id: -1,
+  username: ""
+}
+
+
 export type { Discussion, Reply, ResponseObject, User };
+export {emptyUser};

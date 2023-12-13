@@ -4,7 +4,7 @@ import { Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import ThreadList from "../components/ThreadList";
-import axios from "../utils/AxiosInstance";
+import { axiosinstance } from "../utils/AxiosInstance";
 import { Discussion, ResponseObject } from "../utils/Types";
 
 function Home() {
@@ -12,11 +12,10 @@ function Home() {
 
   // Get list of discussions
   useEffect(() => {
-    axios.get('/discussions')
-    .then( response => {
+    axiosinstance.get(`/api/discussions`)
+    .then(response => {
       setThreads(response.data.data.map((thread:ResponseObject) => (thread.attributes as Discussion)))
-      console.log(response)
-      console.log(response.data.data)
+      console.log(threads)
     }).catch(response => console.log(response))
   }, []);
 

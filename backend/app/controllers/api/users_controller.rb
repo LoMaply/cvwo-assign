@@ -1,5 +1,6 @@
 module Api
   class UsersController < ApplicationController
+    before_action :authorized, only: [:destroy]
 
     def index
       @users = User.all
@@ -9,15 +10,18 @@ module Api
 
     def show
       @user = User.find(params[:id])
-      
+
       render json: UserSerializer.new(@user).serializable_hash.to_json
     end
 
     def create
       @user = User.new(user_params)
-
+      @token = encode_token(user_id: user.id)
       if @user.save
-        render json: UserSerializer.new(@user).serializable_hash.to_json
+        render json: {
+          user: user,
+          token: @token
+        }, status: :created
       else
         render json: { error: user.errors.messages }, status: 422
       end
@@ -35,7 +39,7 @@ module Api
     private
 
     def user_params
-      params.require(:user).permit(:name)
+      params.require(:user).permit(:username)
     end
 
   end
