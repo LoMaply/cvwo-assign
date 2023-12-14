@@ -4,26 +4,21 @@ module Api
 
     def index
       @users = User.all
-      
       render json: UserSerializer.new(@users).serializable_hash.to_json
     end
 
     def show
       @user = User.find(params[:id])
-
       render json: UserSerializer.new(@user).serializable_hash.to_json
     end
 
     def create
       @user = User.new(user_params)
-      @token = encode_token(user_id: user.id)
+      @token = encode_token(user_id: @user.id)
       if @user.save
-        render json: {
-          user: user,
-          token: @token
-        }, status: :created
+        render json: { token: @token, user: @user }, status: :created
       else
-        render json: { error: user.errors.messages }, status: 422
+        render json: { error: @user.errors.messages }, status: 422
       end
     end
 
@@ -32,7 +27,7 @@ module Api
       if @user.destroy
         head :no_content
       else
-        render json: { error: user.errors.messages }, status: 422
+        render json: { error: @user.errors.messages }, status: 422
       end
     end
 

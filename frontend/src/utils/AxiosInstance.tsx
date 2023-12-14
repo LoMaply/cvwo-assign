@@ -12,6 +12,6 @@ const authorizedinstance = (token:String) => axios.create({
   baseURL: BASE_URL,
   timeout: 1000,
   headers: {'Access-Control-Allow-Origin': '*', 'Authorization': 'Bearer ' + token}
-})
+});
 
 export { axiosinstance, authorizedinstance };

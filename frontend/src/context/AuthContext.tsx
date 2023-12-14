@@ -3,7 +3,7 @@ import { User, emptyUser } from "../utils/Types";
 import { axiosinstance } from "../utils/AxiosInstance";
 
 
-const AuthContext = createContext({})
+const AuthContext = createContext({});
 
 export default AuthContext;
 
@@ -18,15 +18,26 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   }, [])
 
 
+  // Registers new user
+  const registerUser = async (name: string) => {
+
+    axiosinstance.post(`/api/users`, {
+      username: name
+    }).then(response => {
+      localStorage.setItem('user', JSON.stringify(response.data));
+      setUser(response.data.user);
+      console.log(response.data);
+    }).catch(error => {
+      console.log(error);
+      alert("Username is already taken");
+    })
+  }
+
   // Logs in user
-  const loginUser = async(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const target = e.target as typeof e.target & {
-      username: {value: string}
-    };
+  const loginUser = async (name: string) => {
   
     axiosinstance.post(`/login`, {
-      username: target.username.value
+      username: name
     }).then(response => {
       localStorage.setItem('user', JSON.stringify(response.data));
       setUser(response.data.user);
@@ -41,17 +52,18 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const logoutUser = () => {
     setUser(emptyUser);
     localStorage.clear();
-  }
+  };
 
   const contextData = {
     user:user,
+    registerUser,
     loginUser,
     logoutUser,
-  }
+  };
 
   return (
     <AuthContext.Provider value={contextData}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

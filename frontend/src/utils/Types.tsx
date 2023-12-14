@@ -13,6 +13,7 @@ type Discussion = {
   id: number;
   title: string;
   description: string;
+  username: string;
 };
 
 type Reply = {
@@ -24,8 +25,8 @@ type Reply = {
 const emptyUser: User = {
   id: -1,
   username: ""
-}
+};
 
 
 export type { Discussion, Reply, ResponseObject, User };
-export {emptyUser};
+export { emptyUser };
