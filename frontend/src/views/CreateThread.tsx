@@ -13,19 +13,18 @@ export default function CreateThread() {
       title: {value: string},
       description: {value: string}
     };
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem("user");
     if (user) {
       const curr = JSON.parse(user);
       const token = curr.token;
       const id = curr.user.id
-      console.log(curr.id)
       authorizedinstance(token).post(`/api/discussions`, {
         title: target.title.value,
         description: target.description.value,
         user_id: id,
       })
       .then(response => {
-        console.log(response)
+        console.log(response);
         navigate("/");
       })
       .catch(error => console.error(error))
