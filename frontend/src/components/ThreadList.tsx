@@ -36,7 +36,7 @@ export default function ThreadList({list} : {list: Array<Discussion>}) {
               <Typography gutterBottom variant="h6">
                 {item.title}
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="body1" style={{ whiteSpace: "pre-wrap" }}>
                 {item.description}
               </Typography>
             </CardContent>
