@@ -1,19 +1,23 @@
 import { Box, Button, Card, CardActions, CardContent, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import CommentList from "../components/CommentList";
 import { Discussion, Reply, ResponseObject, emptyDiscussion } from "../utils/Types";
 import CommentInput from "../components/CommentInput";
 import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CommentCard from "../components/CommentCard";
+import AuthContext from "../context/AuthContext";
 
 
 export default function ViewThread({ color }: { color: "primary" }) {
+
+  const { user } = useContext(AuthContext) as { user: User };
 
   // Determines which main card content to display
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [threadData, setThreadData] = useState<Discussion>(emptyDiscussion);
   const [commentList, setCommentList] = useState<Array<Reply>>([]);
+
+  // Allows children components to trigger useEffect below, which updates thread data and comment list
   const [childTracker, setChildTracker] = useState<number>(0);
 
   // Get id of thread from previous page (either this page reloaded or thread list)
@@ -32,12 +36,10 @@ export default function ViewThread({ color }: { color: "primary" }) {
 
 
   // Get current logged in user if existing
-  let isCreator = false;
   let token = "";
-  const user = localStorage.getItem("user");
-  if (user) {
-    const curr = JSON.parse(user);
-    isCreator = threadData.username == curr.user.username;
+  const person = localStorage.getItem("user");
+  if (person) {
+    const curr = JSON.parse(person);
     token = curr.token;
   }
 
@@ -126,7 +128,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
               {threadData.description}
             </Typography>
           </CardContent>
-          {isCreator && userOptions}
+          {(user.username == threadData.username) && userOptions}
         </>
       )
     }
