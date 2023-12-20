@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardActions, CardContent, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Discussion, Reply, ResponseObject, emptyDiscussion } from "../utils/Types";
+import { Discussion, Reply, ResponseObject, User, emptyDiscussion } from "../utils/Types";
 import CommentInput from "../components/CommentInput";
 import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
 import { useContext, useEffect, useState } from "react";
