@@ -1,5 +1,6 @@
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 import HeaderOptions from "./HeaderOptions";
 
 export default function Header() {

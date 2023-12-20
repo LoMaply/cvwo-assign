@@ -1,10 +1,10 @@
-import { Box, ThemeProvider, createTheme } from "@mui/material";
+import { Box, createTheme,ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "../components/Header";
+import { AuthProvider } from "../context/AuthContext";
 import CreateThread from "./CreateThread";
 import Home from "./Home";
-import { AuthProvider } from "../context/AuthContext";
 import ViewThread from "./ViewThread";
 
 function App() {
@@ -34,6 +34,6 @@ function App() {
       </ThemeProvider>
     </BrowserRouter>
   );
-};
+}
 
 export default App;

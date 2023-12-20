@@ -1,11 +1,12 @@
 import { Box, Button, Card, CardActions, CardContent, Paper, Stack, TextField, Typography } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Discussion, Reply, ResponseObject, User, emptyDiscussion } from "../utils/Types";
-import CommentInput from "../components/CommentInput";
-import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
 import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import CommentCard from "../components/CommentCard";
+import CommentInput from "../components/CommentInput";
 import AuthContext from "../context/AuthContext";
+import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
+import { Discussion, emptyDiscussion,Reply, ResponseObject, User } from "../utils/Types";
 
 
 export default function ViewThread({ color }: { color: "primary" }) {
@@ -143,7 +144,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
         </Card>
         <CommentInput childTracker={childTracker} setChildTracker={setChildTracker} discussionid={threadData.id}/>
         <Stack spacing={1} alignItems="center" sx={{ width:"100%" }}>
-          {commentList.map((comment: Reply, i) => {
+          {commentList.map((comment: Reply) => {
             return (<CommentCard comment={comment} childTracker={childTracker} setChildTracker={setChildTracker}/>);
           })}
         </Stack>

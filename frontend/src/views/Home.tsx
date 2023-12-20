@@ -25,6 +25,6 @@ function Home({ color }: { color: "primary" }) {
       <ThreadList list={threads} />
     </Paper>
   );
-};
+}
 
 export default Home;

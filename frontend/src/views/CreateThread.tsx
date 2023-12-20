@@ -1,6 +1,7 @@
 import { Box, Button, Paper, Stack, TextField, Typography } from "@mui/material";
-import { authorizedinstance } from "../utils/AxiosInstance";
 import { useNavigate } from "react-router-dom";
+
+import { authorizedinstance } from "../utils/AxiosInstance";
 
 
 export default function CreateThread() {
@@ -64,4 +65,4 @@ export default function CreateThread() {
       </form>
     </Paper>
   );
-};
+}

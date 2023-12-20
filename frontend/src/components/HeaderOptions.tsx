@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
-import AuthContext from "../context/AuthContext";
-import { User, emptyUser } from "../utils/Types";
 import { Button, Menu, MenuItem } from "@mui/material";
+import { useContext, useState } from "react";
+
+import AuthContext from "../context/AuthContext";
+import { emptyUser,User } from "../utils/Types";
 import Login from "./Login";
 
 
@@ -53,5 +54,5 @@ export default function HeaderOptions() {
       </Menu>
     </>
     );
-  };
-};
+  }
+}

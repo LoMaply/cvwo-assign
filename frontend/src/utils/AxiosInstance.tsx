@@ -8,10 +8,10 @@ const axiosinstance = axios.create({
   headers: {'Access-Control-Allow-Origin': '*'}
 });
 
-const authorizedinstance = (token:String) => axios.create({
+const authorizedinstance = (token:string) => axios.create({
   baseURL: BASE_URL,
   timeout: 1000,
   headers: {'Access-Control-Allow-Origin': '*', 'Authorization': 'Bearer ' + token}
 });
 
-export { axiosinstance, authorizedinstance };
+export { authorizedinstance,axiosinstance };

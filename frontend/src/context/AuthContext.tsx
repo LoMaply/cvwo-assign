@@ -1,6 +1,7 @@
-import { createContext, useState, useEffect } from "react";
-import { User, emptyUser } from "../utils/Types";
+import { createContext, useEffect,useState } from "react";
+
 import { axiosinstance } from "../utils/AxiosInstance";
+import { emptyUser,User } from "../utils/Types";
 
 
 const AuthContext = createContext({});
