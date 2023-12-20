@@ -13,7 +13,7 @@ export default function ThreadList({list} : {list: Array<Discussion>}) {
   // Generate custom thread url and forwards thread data to ViewThread page.
   const viewThread = (item: Discussion) => {
     const urlBack = item.title.toLowerCase().replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '').split(" ").splice(0, 9).join("_");
-    navigate(`/thread/${item.username}/${urlBack}`, {state:{discussion: item}});
+    navigate(`/thread/${item.username}/${urlBack}`, {state:{discussionid: item.id}});
   };
 
   return (

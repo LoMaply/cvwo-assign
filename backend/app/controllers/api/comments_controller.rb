@@ -12,6 +12,16 @@ module Api
       end
     end
 
+    def update
+      @comment = Comment.find(params[:id])
+
+      if @comment.update(comment_params)
+        render json: CommentSerializer.new(@comment).serializable_hash.to_json
+      else
+        render json: { error: comment.errors.messages }, status: 422
+      end
+    end
+
     def destroy
       @comment = Comment.find(params[:id])
 

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users
     resources :discussions
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [:create, :update, :destroy]
   end
 
   get '*path', to: 'pages#index', via: :all

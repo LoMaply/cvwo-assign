@@ -1,22 +1,35 @@
 import { Box, Button, Card, CardActions, CardContent, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import CommentList from "../components/CommentList";
-import { Discussion } from "../utils/Types";
+import { Discussion, Reply, ResponseObject, emptyDiscussion } from "../utils/Types";
 import CommentInput from "../components/CommentInput";
-import { authorizedinstance } from "../utils/AxiosInstance";
-import { useState } from "react";
+import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
+import { useEffect, useState } from "react";
+import CommentCard from "../components/CommentCard";
 
 
 export default function ViewThread({ color }: { color: "primary" }) {
 
   // Determines which main card content to display
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [threadData, setThreadData] = useState<Discussion>(emptyDiscussion);
+  const [commentList, setCommentList] = useState<Array<Reply>>([]);
+  const [childTracker, setChildTracker] = useState<number>(0);
 
-  // Get data of currently viewed thread from clicked Card in ThreadList.tsx
+  // Get id of thread from previous page (either this page reloaded or thread list)
   const location = useLocation()
-  let threadData: Discussion = location.state.discussion;
-  console.log(threadData)
-  console.log(threadData.description)
+  const discussionid: number = location.state.discussionid;
+
+  // Get data of currently viewed thread and comments
+  useEffect(() => {
+    axiosinstance.get(`/api/discussions/${discussionid}`)
+    .then(response => {
+      setThreadData(response.data.data.attributes);
+      setCommentList(response.data.included.map((item: ResponseObject) => item.attributes));
+    })
+    .catch(error => console.log(error));
+  }, [childTracker])
+
 
   // Get current logged in user if existing
   let isCreator = false;
@@ -51,8 +64,8 @@ export default function ViewThread({ color }: { color: "primary" }) {
       description: target.description.value,
     })
     .then(response => {
-      // Reload thread page with updated information
-      navigate(location.pathname, {state:{discussion: response.data.data.attributes}});
+      // Update thread with new
+      setChildTracker(childTracker + 1)
       setIsEditing(false);
     })
     .catch(error => console.log(error));
@@ -126,8 +139,12 @@ export default function ViewThread({ color }: { color: "primary" }) {
         <Card variant="outlined" sx={{ width: "98%" }}>
           {mainContent()}
         </Card>
-        <CommentInput />
-        <CommentList />
+        <CommentInput childTracker={childTracker} setChildTracker={setChildTracker} discussionid={threadData.id}/>
+        <Stack spacing={1} alignItems="center" sx={{ width:"100%" }}>
+          {commentList.map((comment: Reply, i) => {
+            return (<CommentCard comment={comment} childTracker={childTracker} setChildTracker={setChildTracker}/>);
+          })}
+        </Stack>
       </Stack>
     </Paper>
   )
