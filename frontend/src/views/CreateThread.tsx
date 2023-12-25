@@ -1,10 +1,14 @@
-import { Box, Button, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { authorizedinstance } from "../utils/AxiosInstance";
+import categories from "../utils/CategoryOptions";
+import { useState } from "react";
 
 
 export default function CreateThread() {
+
+  const [category, setCategory] = useState<string>(categories[0]);
 
   const navigate = useNavigate();
 
@@ -15,6 +19,10 @@ export default function CreateThread() {
       description: {value: string}
     };
     const user = localStorage.getItem("user");
+    if (target.title.value == "") {
+      alert("Title cannot be empty");
+      return;
+    }
     if (user) {
       const curr = JSON.parse(user);
       const token = curr.token;
@@ -22,6 +30,7 @@ export default function CreateThread() {
       authorizedinstance(token).post(`/api/discussions`, {
         title: target.title.value,
         description: target.description.value,
+        category: category,
         user_id: id,
       })
       .then(response => {
@@ -60,7 +69,17 @@ export default function CreateThread() {
             label="Text (optional)"
             sx={{ width: "75%" }}
           />
-          <Button type="submit">Submit</Button>
+
+          <Stack direction="row" justifyContent="center" sx={{ width: "75%" }}>
+            <Select
+              defaultValue={categories[0]}
+              onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
+              sx={{ width: "25%", minWidth: "170px" }}
+            >
+              {categories.map((item, i) => (<MenuItem value={item} key={i}>{item}</MenuItem>))}
+            </Select>
+            <Button type="submit">Submit</Button>
+          </Stack>
         </Stack>
       </form>
     </Paper>

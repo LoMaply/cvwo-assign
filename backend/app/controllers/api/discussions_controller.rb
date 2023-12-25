@@ -48,7 +48,7 @@ module Api
     private
 
     def discussion_params
-      params.require(:discussion).permit(:title, :description, :user_id)
+      params.require(:discussion).permit(:title, :description, :user_id, :category)
     end
 
     def options

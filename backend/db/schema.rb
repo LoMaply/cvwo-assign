@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_13_034107) do
   end
 
   create_table "discussions", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "description"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false

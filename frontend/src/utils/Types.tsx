@@ -14,6 +14,7 @@ type Discussion = {
   title: string;
   description: string;
   username: string;
+  category: string;
 };
 
 type Reply = {
@@ -34,6 +35,7 @@ const emptyDiscussion: Discussion = {
   title: "",
   description: "",
   username: "",
+  category: "",
 }
 
 
