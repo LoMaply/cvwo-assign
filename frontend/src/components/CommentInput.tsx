@@ -3,7 +3,9 @@ import { SetStateAction, useState } from "react";
 
 import { authorizedinstance } from "../utils/AxiosInstance";
 
-
+/**
+ * Textbox for submitting comments under threads.
+ */
 export default function CommentInput({childTracker, setChildTracker, discussionid}: {childTracker: number, setChildTracker: React.Dispatch<React.SetStateAction<number>>, discussionid: number}) {
 
   const [ inputValue, setInputValue ] = useState<string>("");

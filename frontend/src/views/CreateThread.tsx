@@ -1,11 +1,13 @@
-import { Autocomplete, Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import { authorizedinstance } from "../utils/AxiosInstance";
 import categories from "../utils/CategoryOptions";
 import { useState } from "react";
 
-
+/**
+ * Page for creating new threads. User must be logged in to successfully create a thread.
+ */
 export default function CreateThread() {
 
   const [category, setCategory] = useState<string>(categories[0]);

@@ -3,6 +3,9 @@ import React, { useContext, useState } from "react";
 
 import AuthContext from "../context/AuthContext";
 
+/**
+ * Login button and dialog for login/account creation.
+ */
 export default function Login() {
   const { loginUser, registerUser } = useContext(AuthContext) as {loginUser: (name: string) => Promise<void>, registerUser: (name: string) => Promise<void>};
 

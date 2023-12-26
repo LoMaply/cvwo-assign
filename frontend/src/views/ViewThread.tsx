@@ -8,7 +8,9 @@ import AuthContext from "../context/AuthContext";
 import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
 import { Discussion, emptyDiscussion,Reply, ResponseObject, User } from "../utils/Types";
 
-
+/**
+ * Page for viewing full details of thread, including comments.
+ */
 export default function ViewThread({ color }: { color: "primary" }) {
 
   const { user } = useContext(AuthContext) as { user: User };
@@ -143,7 +145,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
           {mainContent()}
         </Card>
         <CommentInput childTracker={childTracker} setChildTracker={setChildTracker} discussionid={threadData.id}/>
-        <Stack spacing={1} alignItems="center" sx={{ width:"100%" }}>
+        <Stack spacing={1} alignItems="center" sx={{ width: "100%", paddingBottom: "10px" }}>
           {commentList.map((comment: Reply) => {
             return (<CommentCard comment={comment} childTracker={childTracker} setChildTracker={setChildTracker}/>);
           })}

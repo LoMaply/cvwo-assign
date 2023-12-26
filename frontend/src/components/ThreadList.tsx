@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 import { Discussion } from "../utils/Types";
 
+/**
+ * Component for displaying threads in main page.
+ * @param list Filtered list of threads to be displayed.
+ */
 export default function ThreadList({list} : {list: Array<Discussion>}) {
 
   const navigate = useNavigate();

@@ -6,6 +6,7 @@ import { AuthProvider } from "../context/AuthContext";
 import CreateThread from "./CreateThread";
 import Home from "./Home";
 import ViewThread from "./ViewThread";
+import ScrollToTop from "../components/Scroll";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="/thread/:username/:title" element={<ViewThread color="primary" />} />
             </Routes>
           </Box>
+          <ScrollToTop />
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>

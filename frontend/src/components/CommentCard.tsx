@@ -6,7 +6,9 @@ import { authorizedinstance } from "../utils/AxiosInstance";
 import { Reply, User } from "../utils/Types";
 
 
-
+/**
+ * Component displaying a comment under a thread along with edit/delete buttons for comment authors.
+ */
 export default function CommentCard({comment, childTracker, setChildTracker}: {comment: Reply, childTracker: number, setChildTracker: React.Dispatch<React.SetStateAction<number>>}) {
 
   const [isEditing, setIsEditing] = useState<boolean>(false);

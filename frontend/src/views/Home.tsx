@@ -9,6 +9,9 @@ import { Discussion, ResponseObject } from "../utils/Types";
 import { useNavigate } from "react-router-dom";
 import categories from "../utils/CategoryOptions";
 
+/**
+ * Main page displaying list of threads. List can be filtered/searched.
+ */
 function Home({ color }: { color: "primary" }) {
   const [threads, setThreads] = useState<Array<Discussion>>([]);
   const [visible, setVisible] = useState<Array<Discussion>>([]);

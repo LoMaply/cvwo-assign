@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import HeaderOptions from "./HeaderOptions";
 
+/**
+ * Header of entire app, to be used in App.tsx directly.
+ */
 export default function Header() {
 
   const navigate = useNavigate();

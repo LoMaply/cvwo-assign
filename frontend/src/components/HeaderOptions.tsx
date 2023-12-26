@@ -5,7 +5,9 @@ import AuthContext from "../context/AuthContext";
 import { emptyUser,User } from "../utils/Types";
 import Login from "./Login";
 
-
+/**
+ * Rightmost component on header, displaying either a Login button or dropdown with several user options.
+ */
 export default function HeaderOptions() {
   const { user, logoutUser } = useContext(AuthContext) as { user: User, logoutUser: () => void };
 
