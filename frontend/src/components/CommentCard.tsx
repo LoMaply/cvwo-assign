@@ -17,10 +17,9 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
 
   // Get current logged in user if existing
   let token = "";
-  const person = localStorage.getItem("user");
-  if (person) {
-    const curr = JSON.parse(person);
-    token = curr.token;
+  const storage = localStorage.getItem("token");
+  if (storage) {
+    token = JSON.parse(storage);
   }
 
   // No checks for logged in for handleDelete/handleEdit as only logged in users can access these buttons
@@ -46,14 +45,14 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
       setIsEditing(false);
     })
     .catch(error => console.log(error));
-  };
+  }
 
   const userOptions = (
     <CardActions>
       <Button onClick={() => setIsEditing(true)}>Edit</Button>
       <Button onClick={handleDelete}>Delete</Button>
     </CardActions>
-  )
+  );
 
   const content = () => {
     if (isEditing) {
@@ -66,13 +65,14 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
               maxRows={9}
               type="text"
               name="description"
-              label="Text (optional)"
+              label="Text"
               defaultValue={comment.description}
               sx={{ width: "99%" }}
+              required
             />
             <Stack direction="row">
+              <Button type="submit">Save</Button>
               <Button onClick={() => setIsEditing(false)}>Cancel</Button>
-              <Button type="submit">Submit</Button>
             </Stack>
           </form>
         </CardContent>
@@ -98,5 +98,5 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
     <Card variant="outlined" sx={{ width: "98%" }}>
       {content()}
     </Card>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import {  Box, Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, TextField } from "@mui/material";
+import { Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import React, { useContext, useState } from "react";
 
 import AuthContext from "../context/AuthContext";
@@ -15,22 +15,22 @@ export default function Login() {
   // Handle opening/closing login dialog
   const handleOpen = () => {
     setOpen(true);
-  };
+  }
 
   const handleClose = () => {
     setOpen(false);
     setChecked(false);
-  };
+  }
 
   const handleChange = () => {
     setChecked(!checked)
-  };
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
       username: {value: string}
-    };
+    }
 
     if (checked) {
       registerUser(target.username.value);
@@ -48,16 +48,23 @@ export default function Login() {
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-            <TextField autoFocus type="text" size="small" variant="filled" name="username" label="Username" />
-            <Box >
+            <TextField
+              autoFocus
+              type="text" 
+              size="small" 
+              variant="filled" 
+              name="username" 
+              label="Username"
+            />
+            <FormGroup row sx={{ marginTop: "1vh" }}>
               <FormControlLabel 
                 control={
                   <Checkbox checked={checked} onChange={handleChange} />
                 }
                 label="Create Account"
               />
-              <Button type="submit">Submit</Button>
-            </Box>
+              <Button type="submit" variant="contained">Submit</Button>
+            </FormGroup>
           </form>
         </DialogContent>
       </Dialog>

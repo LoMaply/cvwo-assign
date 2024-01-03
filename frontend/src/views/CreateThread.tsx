@@ -1,14 +1,18 @@
 import { Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import AuthContext from "../context/AuthContext";
 import { authorizedinstance } from "../utils/AxiosInstance";
 import categories from "../utils/CategoryOptions";
-import { useState } from "react";
+import { User } from "../utils/Types";
 
 /**
  * Page for creating new threads. User must be logged in to successfully create a thread.
  */
 export default function CreateThread() {
+
+  const { user } = useContext(AuthContext) as { user: User };
 
   const [category, setCategory] = useState<string>(categories[0]);
 
@@ -20,20 +24,15 @@ export default function CreateThread() {
       title: {value: string},
       description: {value: string}
     };
-    const user = localStorage.getItem("user");
-    if (target.title.value == "") {
-      alert("Title cannot be empty");
-      return;
-    }
-    if (user) {
-      const curr = JSON.parse(user);
-      const token = curr.token;
-      const id = curr.user.id
+    const storage = localStorage.getItem("token");
+    if (storage) {
+      const token = JSON.parse(storage);
+
       authorizedinstance(token).post(`/api/discussions`, {
         title: target.title.value,
         description: target.description.value,
         category: category,
-        user_id: id,
+        user_id: user.id,
       })
       .then(response => {
         console.log(response);
@@ -61,6 +60,7 @@ export default function CreateThread() {
             label="Title"
             sx={{ width: "75%" }}
             inputProps={{ maxLength: 300 }}
+            required
           />
           <TextField 
             multiline

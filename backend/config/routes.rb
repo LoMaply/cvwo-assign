@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   root 'pages#index'
 
   post '/login', to: 'authentication#login'
+  post '/load', to: 'authentication#load'
 
   namespace :api do
     resources :users

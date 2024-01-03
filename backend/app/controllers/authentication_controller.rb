@@ -1,4 +1,7 @@
 class AuthenticationController < ApplicationController
+
+  SECRET_KEY = "TEST_SECRET_KEY"
+
   def login
     user = User.find_by(username: params[:username])
 
@@ -10,5 +13,21 @@ class AuthenticationController < ApplicationController
     end
   end
 
-  
+  def load
+    token = params[:token]
+
+    print(token)
+
+    decoded = JWT.decode(token, SECRET_KEY, nil)
+
+    print(decoded)
+
+    if decoded
+      user_id = decoded[0]['user_id']
+      @user = User.find_by(id: user_id)
+      render json: { token: token, user: @user }
+    else 
+      render json: { error: 'Invalid token' }, status: :unauthorized
+    end
+  end
 end

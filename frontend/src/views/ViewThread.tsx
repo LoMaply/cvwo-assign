@@ -27,7 +27,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
   const location = useLocation()
   const discussionid: number = location.state.discussionid;
 
-  // Get data of currently viewed thread and comments
+  // Get data of currently viewed thread and associated comments
   useEffect(() => {
     axiosinstance.get(`/api/discussions/${discussionid}`)
     .then(response => {
@@ -35,15 +35,14 @@ export default function ViewThread({ color }: { color: "primary" }) {
       setCommentList(response.data.included.map((item: ResponseObject) => item.attributes));
     })
     .catch(error => console.log(error));
-  }, [childTracker])
+  }, [childTracker]);
 
 
   // Get current logged in user if existing
   let token = "";
-  const person = localStorage.getItem("user");
-  if (person) {
-    const curr = JSON.parse(person);
-    token = curr.token;
+  const storage = localStorage.getItem("token");
+  if (storage) {
+    token = JSON.parse(storage);
   }
 
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
       setIsEditing(false);
     })
     .catch(error => console.log(error));
-  };
+  }
 
   // Only displays edit/delete buttons for thread creator
   const userOptions = (
@@ -82,7 +81,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
       <Button onClick={() => setIsEditing(true)}>Edit</Button>
       <Button onClick={handleDelete}>Delete</Button>
     </CardActions>
-  )
+  );
 
   // Main card content
   const mainContent = () => {
@@ -99,6 +98,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
                 defaultValue={threadData.title}
                 sx={{ width: "99%" }}
                 inputProps={{ maxLength: 300 }}
+                required
               />
               <TextField 
                 multiline
@@ -111,8 +111,8 @@ export default function ViewThread({ color }: { color: "primary" }) {
                 sx={{ width: "99%" }}
               />
               <Stack direction="row">
+                <Button type="submit">Save</Button>
                 <Button onClick={() => setIsEditing(false)}>Cancel</Button>
-                <Button type="submit">Submit</Button>
               </Stack>
             </Stack>
           </form>
@@ -141,16 +141,19 @@ export default function ViewThread({ color }: { color: "primary" }) {
     <Paper elevation={10} sx={{ width: "75%", minHeight: "90vh", bgcolor: `${color}.light`}}>
       <Stack spacing={2} alignItems="center">
         <Box sx={{ height: "1vh" }}/>
+
         <Card variant="outlined" sx={{ width: "98%" }}>
           {mainContent()}
         </Card>
+
         <CommentInput childTracker={childTracker} setChildTracker={setChildTracker} discussionid={threadData.id}/>
+
         <Stack spacing={1} alignItems="center" sx={{ width: "100%", paddingBottom: "10px" }}>
-          {commentList.map((comment: Reply) => {
-            return (<CommentCard comment={comment} childTracker={childTracker} setChildTracker={setChildTracker}/>);
+          {commentList.map((comment: Reply, i: number) => {
+            return (<CommentCard key={i} comment={comment} childTracker={childTracker} setChildTracker={setChildTracker}/>);
           })}
         </Stack>
       </Stack>
     </Paper>
-  )
+  );
 }

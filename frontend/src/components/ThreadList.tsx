@@ -15,7 +15,7 @@ export default function ThreadList({list} : {list: Array<Discussion>}) {
   const viewThread = (item: Discussion) => {
     const urlBack = item.title.toLowerCase().replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '').split(" ").splice(0, 9).join("_");
     navigate(`/thread/${item.username}/${urlBack}`, {state:{discussionid: item.id}});
-  };
+  }
 
   return (
     <Stack spacing={1} alignItems="center">
@@ -41,5 +41,5 @@ export default function ThreadList({list} : {list: Array<Discussion>}) {
         Looks like there are no more posts!
       </Typography>
     </Stack>
-  )
+  );
 }

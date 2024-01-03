@@ -1,12 +1,16 @@
 import { Button, Card, CardContent, Stack, TextField, Typography } from "@mui/material";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useContext, useState } from "react";
 
+import AuthContext from "../context/AuthContext";
 import { authorizedinstance } from "../utils/AxiosInstance";
+import { User } from "../utils/Types";
 
 /**
  * Textbox for submitting comments under threads.
  */
 export default function CommentInput({childTracker, setChildTracker, discussionid}: {childTracker: number, setChildTracker: React.Dispatch<React.SetStateAction<number>>, discussionid: number}) {
+
+  const { user } = useContext(AuthContext) as { user: User };
 
   const [ inputValue, setInputValue ] = useState<string>("");
 
@@ -16,15 +20,13 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const user = localStorage.getItem("user");
-    if (user) {
-      const curr = JSON.parse(user);
-      const token = curr.token;
-      const id = curr.user.id;
+    const storage = localStorage.getItem("token");
+    if (storage) {
+      const token = JSON.parse(storage);
 
       authorizedinstance(token).post(`/api/comments`, {
         description: inputValue,
-        user_id: id,
+        user_id: user.id,
         discussion_id: discussionid,
       })
       .then(response => {
@@ -36,7 +38,7 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
     } else {
       alert("You are not logged in")
     }
-  };
+  }
 
   return (
     <Card sx={{ width: "98%" }}>
@@ -55,6 +57,7 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
             sx={{ width: "100%" }}
             value={inputValue}
             onChange={handleInputChange}
+            required
           />
           <Stack direction="row" justifyContent="end">
             <Button type="submit">Submit</Button>

@@ -1,13 +1,13 @@
 import "../styles/Home.css";
 
-import { Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import ThreadList from "../components/ThreadList";
 import { axiosinstance } from "../utils/AxiosInstance";
-import { Discussion, ResponseObject } from "../utils/Types";
-import { useNavigate } from "react-router-dom";
 import categories from "../utils/CategoryOptions";
+import { Discussion, ResponseObject } from "../utils/Types";
 
 /**
  * Main page displaying list of threads. List can be filtered/searched.
@@ -19,7 +19,7 @@ function Home({ color }: { color: "primary" }) {
   const navigate = useNavigate();
   const newThread = () => {
     navigate(`/submit`);
-  };
+  }
 
   // Get list of discussions from backend
   useEffect(() => {
@@ -40,7 +40,7 @@ function Home({ color }: { color: "primary" }) {
     } else {
       setVisible(threads.filter((item:Discussion) => (item.category == category)));
     }
-  };
+  }
 
   return (
     <Paper elevation={10} sx={{ width: "75%", minHeight: "90vh", bgcolor: `${color}.light`}}>

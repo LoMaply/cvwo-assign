@@ -11,7 +11,7 @@ export default function Header() {
   const navigate = useNavigate();
   const mainPage = () => {
     navigate(`/`);
-  };
+  }
 
   return (
     <>
@@ -23,7 +23,7 @@ export default function Header() {
             sx={{ md: "flex", mr: 1, cursor: "pointer" }}
             onClick={mainPage}
           >
-            Forum
+            Thoughts
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <HeaderOptions />

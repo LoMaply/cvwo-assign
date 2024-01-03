@@ -15,7 +15,7 @@ export default function ScrollToTop() {
       top: 0,
       behavior: "instant", // Optional: smooth scrolling animation
     });
-  };
+  }
 
   return (
     <Fade in={trigger}>

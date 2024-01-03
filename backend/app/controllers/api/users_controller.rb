@@ -1,6 +1,6 @@
 module Api
   class UsersController < ApplicationController
-    before_action :authorized, only: [:destroy]
+    before_action :authorized, only: [:destroy, :update]
 
     def index
       @users = User.all
@@ -15,6 +15,7 @@ module Api
     def create
       @user = User.new(user_params)
       @token = encode_token(user_id: @user.id)
+
       if @user.save
         render json: { token: @token, user: @user }, status: :created
       else
@@ -24,8 +25,20 @@ module Api
 
     def destroy
       @user = User.find(params[:id])
+
       if @user.destroy
         head :no_content
+      else
+        render json: { error: @user.errors.messages }, status: 422
+      end
+    end
+
+    def update
+      @user = User.find(params[:id])
+
+      if @user.update(user_params)
+        @token = encode_token(user_id: @user.id)
+        render json: { token: @token, user: @user }, status: :accepted
       else
         render json: { error: @user.errors.messages }, status: 422
       end
