@@ -1,4 +1,6 @@
 
+// Thread categories
+
 const categories = [
   "Discussion",
   "Suggestion",

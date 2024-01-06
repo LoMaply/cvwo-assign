@@ -15,12 +15,7 @@ class AuthenticationController < ApplicationController
 
   def load
     token = params[:token]
-
-    print(token)
-
     decoded = JWT.decode(token, SECRET_KEY, nil)
-
-    print(decoded)
 
     if decoded
       user_id = decoded[0]['user_id']

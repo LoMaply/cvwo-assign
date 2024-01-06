@@ -3,7 +3,11 @@ module Api
     before_action :authorized, only: [:create, :update, :destroy]
 
     def index
-      @discussions= Discussion.all
+      if params[:query].present?
+        @discussions = Discussion.where("title LIKE ?", "%" + Discussion.sanitize_sql_like(params[:query]) + "%")
+      else
+        @discussions= Discussion.all
+      end
       
       render json: DiscussionSerializer.new(@discussions).serializable_hash.to_json
     end

@@ -1,6 +1,6 @@
 class DiscussionSerializer
   include JSONAPI::Serializer
-  attributes :title, :description, :id, :category
+  attributes :title, :description, :id, :category, :created_at, :updated_at
 
   # Append username of User that created Discussion to request result
   attribute :username do |discussion|

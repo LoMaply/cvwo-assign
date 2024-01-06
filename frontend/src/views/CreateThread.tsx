@@ -18,7 +18,7 @@ export default function CreateThread() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
       title: {value: string},
@@ -46,44 +46,42 @@ export default function CreateThread() {
 
   return (
     <Paper elevation={10} sx={{ width: "75%", height: "80vh" }}>
-      <form onSubmit={handleSubmit}>
-        <Stack spacing={1} alignItems="center">
-          <Box sx={{ height: "10vh" }}/>
-          <Typography variant="h5" sx={{ width: "75%" }}>
-            Create a post
-          </Typography>
+      <Stack spacing={1} alignItems="center" component="form" onSubmit={handleSubmit}>
+        <Box sx={{ height: "10vh" }}/>
+        <Typography variant="h5" sx={{ width: "75%" }}>
+          Create a post
+        </Typography>
 
-          <TextField 
-            autoFocus
-            type="text"
-            name="title"
-            label="Title"
-            sx={{ width: "75%" }}
-            inputProps={{ maxLength: 300 }}
-            required
-          />
-          <TextField 
-            multiline
-            minRows={9}
-            maxRows={20}
-            type="text"
-            name="description"
-            label="Text (optional)"
-            sx={{ width: "75%" }}
-          />
+        <TextField 
+          autoFocus
+          type="text"
+          name="title"
+          label="Title"
+          sx={{ width: "75%" }}
+          inputProps={{ maxLength: 300 }}
+          required
+        />
+        <TextField 
+          multiline
+          minRows={9}
+          maxRows={20}
+          type="text"
+          name="description"
+          label="Text (optional)"
+          sx={{ width: "75%" }}
+        />
 
-          <Stack direction="row" justifyContent="center" sx={{ width: "75%" }}>
-            <Select
-              defaultValue={categories[0]}
-              onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
-              sx={{ width: "25%", minWidth: "170px" }}
-            >
-              {categories.map((item, i) => (<MenuItem value={item} key={i}>{item}</MenuItem>))}
-            </Select>
-            <Button type="submit">Submit</Button>
-          </Stack>
+        <Stack direction="row" justifyContent="center" sx={{ width: "75%" }}>
+          <Select
+            defaultValue={categories[0]}
+            onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
+            sx={{ width: "25%", minWidth: "170px" }}
+          >
+            {categories.map((item, i) => (<MenuItem value={item} key={i}>{item}</MenuItem>))}
+          </Select>
+          <Button type="submit">Submit</Button>
         </Stack>
-      </form>
+      </Stack>
     </Paper>
   );
 }
