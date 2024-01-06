@@ -67,7 +67,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
       title: target.title.value,
       description: target.description.value,
     })
-    .then(response => {
+    .then(() => {
       // Update thread with new
       setChildTracker(childTracker + 1)
       setIsEditing(false);

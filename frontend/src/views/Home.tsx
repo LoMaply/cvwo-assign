@@ -1,5 +1,7 @@
 import "../styles/Home.css";
 
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Paper, Select, SelectChangeEvent, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,10 +10,6 @@ import ThreadList from "../components/ThreadList";
 import { axiosinstance } from "../utils/AxiosInstance";
 import categories from "../utils/CategoryOptions";
 import { Discussion, ResponseObject } from "../utils/Types";
-
-import ClearIcon from '@mui/icons-material/Clear';
-import SearchIcon from '@mui/icons-material/Search';
-import { Clear } from "@mui/icons-material";
 
 /**
  * Main page displaying list of threads. List can be filtered/searched.
@@ -42,7 +40,7 @@ function Home({ color }: { color: "primary" }) {
   const getThreads = async (query: string) => {
     let url = `/api/discussions`;
     if (query) {
-      url += `?query=${query}`;
+      url += `?query=${query.trim()}`;
     }
     axiosinstance.get(url)
     .then(response => {
@@ -62,16 +60,6 @@ function Home({ color }: { color: "primary" }) {
       setVisible(threads.filter((item:Discussion) => (item.category == category)));
     }
   }
-
-  const resetAdornment = search == ""
-    ? <></>
-    : (
-      <InputAdornment position="end">
-        <IconButton type="reset" edge="end" onClick={() => {setSearch(""); getThreads("");}}>
-          <ClearIcon />
-        </IconButton>
-      </InputAdornment>
-    )
 
   return (
     <Paper elevation={10} sx={{ width: "75%", minHeight: "90vh", bgcolor: `${color}.light` }}>

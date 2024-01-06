@@ -1,3 +1,5 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -58,8 +60,12 @@ export default function HeaderOptions() {
             "aria-labelledby": "header-button",
           }}
         >
-          <MenuItem onClick={handleProfile}>Profile</MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={handleProfile}>
+            <AccountCircleIcon fontSize="small" /> Profile
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            <LogoutIcon fontSize="small" /> Logout
+          </MenuItem>
         </Menu>
       </>
     );

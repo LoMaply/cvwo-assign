@@ -25,7 +25,7 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
   // No checks for logged in for handleDelete/handleEdit as only logged in users can access these buttons
   const handleDelete = () => {
     authorizedinstance(token).delete(`/api/comments/${comment.id}`)
-    .then(response => {
+    .then(() => {
       setChildTracker(childTracker + 1);
     })
     .catch(error => console.log(error));
@@ -39,7 +39,7 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
     authorizedinstance(token).patch(`/api/comments/${comment.id}`, {
       description: target.description.value,
     })
-    .then(response => {
+    .then(() => {
       // Update thread with new info
       setChildTracker(childTracker + 1);
       setIsEditing(false);

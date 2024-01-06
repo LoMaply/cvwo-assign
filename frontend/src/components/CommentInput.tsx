@@ -29,7 +29,7 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
         user_id: user.id,
         discussion_id: discussionid,
       })
-      .then(response => {
+      .then(() => {
         // Update thread with new info
         setChildTracker(childTracker + 1);
         setInputValue("");
