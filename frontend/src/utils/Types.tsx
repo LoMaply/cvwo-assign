@@ -40,4 +40,4 @@ const emptyDiscussion: Discussion = {
 
 
 export type { Discussion, Reply, ResponseObject, User };
-export { emptyDiscussion,emptyUser };
+export { emptyDiscussion, emptyUser };

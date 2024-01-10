@@ -64,12 +64,12 @@ function Home({ color }: { color: "primary" }) {
   return (
     <Paper elevation={10} sx={{ width: "75%", minHeight: "90vh", bgcolor: `${color}.light` }}>
       <Paper variant="outlined" sx={{ height: "6vh", marginBottom: "1vh" }}>
-        <Stack spacing={1} direction="row" alignItems="center" sx={{ height: "100%", marginLeft: "2px" }}>
+        <Stack spacing={1} direction="row" alignItems="center" sx={{ height: "100%", marginLeft: "0.5%", marginRight: "0.5%" }}>
           <Button variant="contained" size="medium" sx={{ width: "12%", borderRadius: "10px" }} onClick={newThread}>
             Create
           </Button>
 
-          <FormControl variant="outlined" size="small" sx={{ width: "70%" }} component="form" onSubmit={handleSubmit} >
+          <FormControl variant="outlined" size="small" component="form" sx={{ flexGrow: 1 }} onSubmit={handleSubmit} >
             <InputLabel htmlFor="outlined-adornment-search">Search</InputLabel>
             <OutlinedInput 
               id="outlined-adornment-search"

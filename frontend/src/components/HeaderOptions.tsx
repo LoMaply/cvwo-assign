@@ -61,10 +61,10 @@ export default function HeaderOptions() {
           }}
         >
           <MenuItem onClick={handleProfile}>
-            <AccountCircleIcon fontSize="small" /> Profile
+            <AccountCircleIcon fontSize="small" sx={{ marginLeft: "-9px", marginRight: "5px" }} /> Profile
           </MenuItem>
           <MenuItem onClick={handleLogout}>
-            <LogoutIcon fontSize="small" /> Logout
+            <LogoutIcon fontSize="small" sx={{marginLeft: "-7px", marginRight: "3px" }} /> Logout
           </MenuItem>
         </Menu>
       </>

@@ -1,6 +1,7 @@
-import { Box, Button, Card, CardContent, FormGroup, Paper, Stack, TextField, Typography } from "@mui/material";
-import { useContext } from "react";
+import { Box, Button, Card, CardContent, Dialog, DialogContent, DialogContentText, DialogTitle, FormGroup, Paper, Stack, TextField, Typography } from "@mui/material";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import AuthContext from "../context/AuthContext";
 import { User } from "../utils/Types";
@@ -9,6 +10,7 @@ import { User } from "../utils/Types";
 export default function Profile({ color }: { color: "primary" }) {
 
   const { user, updateUser, deleteUser } = useContext(AuthContext) as { user: User, updateUser: (token: string, name: string) => Promise<void>, deleteUser: (token: string) => Promise<void> };
+  const [open, setOpen] = useState<boolean>(false);
 
   let token = "";
   const storage = localStorage.getItem("token");
@@ -28,6 +30,7 @@ export default function Profile({ color }: { color: "primary" }) {
   }
 
   const handleDelete = async () => {
+    setOpen(false);
     deleteUser(token);
     navigate("/");
   }
@@ -54,7 +57,18 @@ export default function Profile({ color }: { color: "primary" }) {
                 </FormGroup>
               </form>
             </Stack>
-            <Button type="submit" variant="contained" size="small" onClick={handleDelete}>Delete Profile</Button>
+
+            <Button type="submit" variant="contained" size="small" color="error" startIcon={<DeleteIcon />} onClick={() => setOpen(true)}>Delete Profile</Button>
+            <Dialog open={open} onClose={() => setOpen(false)}>
+              <DialogTitle>Confirm Account Deletion?</DialogTitle>
+              <DialogContent>
+                <DialogContentText gutterBottom>
+                  This action is irreversible and will delete all posts and comments associated with your account.
+                </DialogContentText>
+                <Button type="submit" variant="contained" size="small" color="error" startIcon={<DeleteIcon />} sx={{ marginRight: "1vw" }} onClick={handleDelete}>Confirm</Button>
+                <Button type="button" variant="outlined" size="small" onClick={() => setOpen(false)}>Cancel</Button>
+              </DialogContent>
+            </Dialog>
           </CardContent>
         </Card>
       </Stack>
