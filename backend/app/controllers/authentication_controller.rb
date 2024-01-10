@@ -1,7 +1,5 @@
 class AuthenticationController < ApplicationController
 
-  SECRET_KEY = "TEST_SECRET_KEY"
-
   def login
     user = User.find_by(username: params[:username])
 

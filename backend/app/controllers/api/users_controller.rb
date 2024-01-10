@@ -14,9 +14,9 @@ module Api
 
     def create
       @user = User.new(user_params)
-      @token = encode_token(user_id: @user.id)
 
       if @user.save
+        @token = encode_token(user_id: @user.id)
         render json: { token: @token, user: @user }, status: :created
       else
         render json: { error: @user.errors.messages }, status: 422
