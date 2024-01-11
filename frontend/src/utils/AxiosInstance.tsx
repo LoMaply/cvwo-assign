@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://127.0.0.1:3000';
+const BASE_URL = 'https://cvwo-backend-ina5.onrender.com';
 
 // Used for API calls not requiring authentication.
 const axiosinstance = axios.create({
