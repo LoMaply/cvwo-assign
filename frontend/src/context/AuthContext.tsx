@@ -23,8 +23,12 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     axiosinstance.post(`/load`, {
       token: token
     }).then(response => {
-      setUser(response.data.user);
-      console.log(response.data.user)
+      const user: User = response.data.user;
+      // Fix issue where null user may be returned when localStorage contains invalid token
+      if (user != null) {
+        setUser(response.data.user);
+        console.log(response.data.user)
+      }
     }).catch(error => {
       console.log(error);
     })
