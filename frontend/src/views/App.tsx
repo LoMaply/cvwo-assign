@@ -34,8 +34,8 @@ function App() {
               </Route>
 
               <Route path="/" element={<Home color="primary" />} />
-              <Route path="/submit" element={<CreateThread />} />
-              <Route path="/thread/:username/:title" element={<ViewThread color="primary" />} />
+              <Route path="/create" element={<CreateThread />} />
+              <Route path="/thread/:discussionid/:title" element={<ViewThread color="primary" />} />
               <Route path="*" element={<Empty color="primary" />} />
             </Routes>
           </Box>

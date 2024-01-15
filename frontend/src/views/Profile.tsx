@@ -1,75 +1,97 @@
-import { Box, Button, Card, CardContent, Dialog, DialogContent, DialogContentText, DialogTitle, FormGroup, Paper, Stack, TextField, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Card, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
 
+import ProfileOptions from "../components/ProfileOptions";
+import ProfilePosts from "../components/ProfilePosts";
+import { Discussion, ResponseObject, User } from "../utils/Types";
 import AuthContext from "../context/AuthContext";
-import { User } from "../utils/Types";
+import { axiosinstance } from "../utils/AxiosInstance";
 
 
-export default function Profile({ color }: { color: "primary" }) {
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
 
-  const { user, updateUser, deleteUser } = useContext(AuthContext) as { user: User, updateUser: (token: string, name: string) => Promise<void>, deleteUser: (token: string) => Promise<void> };
-  const [open, setOpen] = useState<boolean>(false);
-
-  let token = "";
-  const storage = localStorage.getItem("token");
-  if (storage) {
-    token = JSON.parse(storage);
-  }
-
-  const navigate = useNavigate();
-
-  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const target = e.target as typeof e.target & {
-      username: {value: string}
-    };
-    updateUser(token, target.username.value);
-    navigate("/");
-  }
-
-  const handleDelete = async () => {
-    setOpen(false);
-    deleteUser(token);
-    navigate("/");
-  }
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
 
   return (
-    <Paper elevation={10} sx={{ width: "75%", minHeight: "90vh", bgcolor: `${color}.light`}}>
-      <Stack spacing={1} alignItems="center">
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3, marginLeft: "-10px" }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+/**
+ * Profile page displaying profile options and posts created by the current logged in user.
+ */
+export default function Profile({ color }: { color: "primary" }) {
+  // Page tabs
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
+
+  // Get threads created by the user for Poststtab
+  const { user } = useContext(AuthContext) as { user: User };
+  const [threads, setThreads] = useState<Array<Discussion>>([]);
+
+  // Get list of discussions from backend
+  useEffect(() => {
+    getThreads();
+  }, []);
+
+  const getThreads = async () => {
+    axiosinstance.get(`/api/discussions?user=${user.id}`)
+    .then(response => {
+      const discussionList: Array<Discussion> = response.data.data.map((thread:ResponseObject) => (thread.attributes as Discussion));
+      setThreads(discussionList);
+      console.log(response.data.data);
+    })
+    .catch(response => console.log(response));
+  }
+
+  
+
+  return (
+    <Paper elevation={10} sx={{ width: "75%", height: "90vh", bgcolor: `${color}.light`}}>
+      <Stack spacing={1} alignItems="center" sx={{ height: "100%" }}>
         <Box />
         <Card variant="outlined" sx={{ width: "98%" }}>
-          <CardContent>
-            <Stack direction="row" alignItems="center" marginBottom="2vh">
-              <Typography marginRight="1%" >
-                Username:
-              </Typography>
-              <form onSubmit={handleUpdate}>
-                <FormGroup row>
-                  <TextField 
-                    size="small"
-                    type="text"
-                    name="username"
-                    defaultValue={user.username}
-                  />
-                  <Button type="submit" variant="contained" size="small" sx={{ marginLeft: "10px" }}>Update</Button>
-                </FormGroup>
-              </form>
-            </Stack>
+          <Tabs value={value} onChange={handleChange}>
+            <Tab label="Options" {...a11yProps(0)} />
+            <Tab label="Posts" {...a11yProps(1)} />
+          </Tabs>
+        </Card>
 
-            <Button type="submit" variant="contained" size="small" color="error" startIcon={<DeleteIcon />} onClick={() => setOpen(true)}>Delete Profile</Button>
-            <Dialog open={open} onClose={() => setOpen(false)}>
-              <DialogTitle>Confirm Account Deletion?</DialogTitle>
-              <DialogContent>
-                <DialogContentText gutterBottom>
-                  This action is irreversible and will delete all posts and comments associated with your account.
-                </DialogContentText>
-                <Button type="submit" variant="contained" size="small" color="error" startIcon={<DeleteIcon />} sx={{ marginRight: "1vw" }} onClick={handleDelete}>Confirm</Button>
-                <Button type="button" variant="outlined" size="small" onClick={() => setOpen(false)}>Cancel</Button>
-              </DialogContent>
-            </Dialog>
-          </CardContent>
+        <Card variant="outlined" sx={{ width: "98%", height: "90%", alignItems: "flex-start" }}>
+          <CustomTabPanel value={value} index={0}>
+            <ProfileOptions />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <ProfilePosts list={threads}/>
+          </CustomTabPanel>
         </Card>
       </Stack>
     </Paper>

@@ -15,6 +15,8 @@ type Discussion = {
   description: string;
   username: string;
   category: string;
+  created_at: string;
+  updated_at: string;
 };
 
 type Reply = {
@@ -36,6 +38,8 @@ const emptyDiscussion: Discussion = {
   description: "",
   username: "",
   category: "",
+  created_at: "",
+  updated_at: ""
 }
 
 

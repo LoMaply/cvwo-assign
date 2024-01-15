@@ -1,12 +1,13 @@
 import { Box, Button, Card, CardActions, CardContent, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import CommentCard from "../components/CommentCard";
 import CommentInput from "../components/CommentInput";
 import AuthContext from "../context/AuthContext";
 import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
 import { Discussion, emptyDiscussion,Reply, ResponseObject, User } from "../utils/Types";
+import { formatDistanceToNowStrict } from "date-fns";
 
 /**
  * Page for viewing full details of thread, including comments.
@@ -23,11 +24,9 @@ export default function ViewThread({ color }: { color: "primary" }) {
   // Allows children components to trigger useEffect below, which updates thread data and comment list
   const [childTracker, setChildTracker] = useState<number>(0);
 
-  // Get id of thread from previous page (either this page reloaded or thread list)
-  const location = useLocation()
-  const discussionid: number = location.state.discussionid;
-
   // Get data of currently viewed thread and associated comments
+  let { discussionid } = useParams();
+
   useEffect(() => {
     axiosinstance.get(`/api/discussions/${discussionid}`)
     .then(response => {
@@ -122,7 +121,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
         <>
           <CardContent>
             <Typography variant="subtitle2">
-              Posted by {threadData.username}
+              Posted by {threadData.username} {threadData.created_at != "" && formatDistanceToNowStrict(new Date(threadData.created_at))} ago
             </Typography>
             {<Typography gutterBottom variant="h6">
               {threadData.title}

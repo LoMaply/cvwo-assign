@@ -5,6 +5,8 @@ module Api
     def index
       if params[:query].present?
         @discussions = Discussion.where("title LIKE ?", "%" + Discussion.sanitize_sql_like(params[:query]) + "%")
+      elsif params[:user].present?
+        @discussions = Discussion.where(user_id: params[:user])
       else
         @discussions= Discussion.all
       end
