@@ -1,4 +1,5 @@
 import { Button, Card, CardActions, CardContent, Stack, TextField, Typography } from "@mui/material";
+import { formatDistanceToNowStrict } from "date-fns";
 import { useContext, useState } from "react";
 
 import AuthContext from "../context/AuthContext";
@@ -82,7 +83,7 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
         <>
           <CardContent>
             <Typography variant="subtitle2">
-              Posted by {comment.username}
+              Posted by {comment.username} {formatDistanceToNowStrict(new Date(comment.created_at))} ago
             </Typography>
             <Typography variant="body1" style={{ whiteSpace: "pre-wrap" }}>
               {comment.description}

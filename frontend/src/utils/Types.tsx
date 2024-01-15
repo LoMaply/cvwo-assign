@@ -25,6 +25,8 @@ type Reply = {
   user_id: number;
   discussion_id: number;
   username: string;
+  created_at: string;
+  updated_at: string;
 };
 
 const emptyUser: User = {

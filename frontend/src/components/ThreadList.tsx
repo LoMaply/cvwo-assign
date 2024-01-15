@@ -1,8 +1,8 @@
 import { Box, Card, CardActionArea, CardContent, Stack, Typography } from "@mui/material";
+import { formatDistanceToNowStrict } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 import { Discussion } from "../utils/Types";
-import { formatDistanceToNowStrict } from "date-fns";
 
 /**
  * Component for displaying threads in main page.

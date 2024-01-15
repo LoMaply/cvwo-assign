@@ -1,4 +1,5 @@
 import { Box, Button, Card, CardActions, CardContent, Paper, Stack, TextField, Typography } from "@mui/material";
+import { formatDistanceToNowStrict } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -7,7 +8,6 @@ import CommentInput from "../components/CommentInput";
 import AuthContext from "../context/AuthContext";
 import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
 import { Discussion, emptyDiscussion,Reply, ResponseObject, User } from "../utils/Types";
-import { formatDistanceToNowStrict } from "date-fns";
 
 /**
  * Page for viewing full details of thread, including comments.
@@ -25,7 +25,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
   const [childTracker, setChildTracker] = useState<number>(0);
 
   // Get data of currently viewed thread and associated comments
-  let { discussionid } = useParams();
+  const { discussionid } = useParams();
 
   useEffect(() => {
     axiosinstance.get(`/api/discussions/${discussionid}`)

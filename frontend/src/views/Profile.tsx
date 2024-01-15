@@ -3,9 +3,9 @@ import { useContext, useEffect, useState } from "react";
 
 import ProfileOptions from "../components/ProfileOptions";
 import ProfilePosts from "../components/ProfilePosts";
-import { Discussion, ResponseObject, User } from "../utils/Types";
 import AuthContext from "../context/AuthContext";
 import { axiosinstance } from "../utils/AxiosInstance";
+import { Discussion, ResponseObject, User } from "../utils/Types";
 
 
 interface TabPanelProps {
@@ -48,7 +48,7 @@ export default function Profile({ color }: { color: "primary" }) {
   // Page tabs
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
