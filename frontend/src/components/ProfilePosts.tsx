@@ -35,7 +35,7 @@ export default function ProfilePosts({list} : {list: Array<Discussion>}) {
   const [page, setPage] = useState(1);
   const pageList: Array<Discussion> = visible.slice((page - 1) * 5, page * 5);
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
