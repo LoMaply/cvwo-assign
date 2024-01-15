@@ -68,7 +68,7 @@ export default function Profile({ color }: { color: "primary" }) {
       const discussionList: Array<Discussion> = response.data.data.map((thread:ResponseObject) => (thread.attributes as Discussion));
       setThreads(discussionList);
     })
-    .catch(response => console.log(response));
+    .catch(error => console.log(error));
   }
 
   

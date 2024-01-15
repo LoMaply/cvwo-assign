@@ -58,7 +58,7 @@ function Home({ color }: { color: "primary" }) {
       setThreads(discussionList);
       setVisible(discussionList.sort((a:Discussion, b:Discussion) => (new Date(b.created_at).getTime() - new Date(a.created_at).getTime())));
     })
-    .catch(response => console.log(response));
+    .catch(error => console.log(error));
   }
 
   const setVisibleThreads = () => {

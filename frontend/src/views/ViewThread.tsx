@@ -7,7 +7,7 @@ import CommentCard from "../components/CommentCard";
 import CommentInput from "../components/CommentInput";
 import AuthContext from "../context/AuthContext";
 import { authorizedinstance, axiosinstance } from "../utils/AxiosInstance";
-import { Discussion, emptyDiscussion,Reply, ResponseObject, User } from "../utils/Types";
+import { Discussion, emptyDiscussion, Reply, ResponseObject, User } from "../utils/Types";
 
 /**
  * Page for viewing full details of thread, including comments.
