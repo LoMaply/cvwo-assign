@@ -40,20 +40,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     localStorage.clear();
   };
 
-  // Updates username
-  const updateUser = async (token: string, name: string) => {
-    await authorizedinstance(token).patch(`/api/users/${user.id}`, {
-      username: name
-    }).then(response => {
-      localStorage.setItem("token", JSON.stringify(response.data.token));
-      setUser(response.data.user);
-      console.log(response.data);
-    }).catch(error => {
-      console.log(error);
-      alert("Username is already taken (update)");
-    })
-  }
-
   // Delete user
   const deleteUser = async (token: string) => {
     await authorizedinstance(token).delete(`/api/users/${user.id}`).then(response => console.log(response.data)).catch(error => console.log(error));
@@ -66,7 +52,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     user:user,
     setUser,
     logoutUser,
-    updateUser,
     deleteUser
   };
 
