@@ -5,6 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AuthContext from "../context/AuthContext";
 import { User } from "../utils/Types";
 import { useNavigate } from "react-router-dom";
+import { authorizedinstance } from "../utils/AxiosInstance";
+import { ta } from "date-fns/locale";
 
 
 /**
@@ -12,8 +14,9 @@ import { useNavigate } from "react-router-dom";
  */
 export default function ProfileOptions() {
 
-  const { user, updateUser, deleteUser } = useContext(AuthContext) as { user: User, updateUser: (token: string, name: string) => Promise<void>, deleteUser: (token: string) => Promise<void> };
+  const { user, deleteUser, setUser } = useContext(AuthContext) as { user: User, deleteUser: (token: string) => Promise<void>, setUser: React.Dispatch<React.SetStateAction<User>> };
   const [open, setOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   let token = "";
   const storage = localStorage.getItem("token");
@@ -28,8 +31,19 @@ export default function ProfileOptions() {
     const target = e.target as typeof e.target & {
       username: {value: string}
     };
-    updateUser(token, target.username.value);
-    navigate("/");
+    // Updates username
+    await authorizedinstance(token).patch(`/api/users/${user.id}`, {
+      username: target.username.value
+    }).then(response => {
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      setUser(response.data.user);
+      setErrorMessage("");
+      navigate("/");
+      console.log(response.data);
+    }).catch(error => {
+      console.log(error);
+      setErrorMessage("This username is already taken!");
+    })
   }
 
   const handleDelete = async () => {
@@ -40,7 +54,7 @@ export default function ProfileOptions() {
   
   return (
     <>
-      <Stack direction="row" alignItems="center" marginBottom="2vh">
+      <Stack direction="row" spacing={1} alignItems="center" marginBottom="2vh">
         <Typography marginRight="1%" >
           Username:
         </Typography>
@@ -55,6 +69,9 @@ export default function ProfileOptions() {
             <Button type="submit" variant="contained" size="small" sx={{ marginLeft: "10px" }}>Update</Button>
           </FormGroup>
         </form>
+        <Typography color="red">
+          {errorMessage}
+        </Typography>
       </Stack>
 
       <Button type="submit" variant="contained" size="small" color="error" startIcon={<DeleteIcon />} onClick={() => setOpen(true)}>Delete Profile</Button>
