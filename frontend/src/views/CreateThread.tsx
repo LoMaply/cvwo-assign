@@ -1,7 +1,7 @@
-import { Box, Button, Dialog, DialogContent, DialogTitle, IconButton, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, Dialog, DialogTitle, IconButton, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CloseIcon from '@mui/icons-material/Close';
 
 import AuthContext from "../context/AuthContext";
 import { authorizedinstance } from "../utils/AxiosInstance";

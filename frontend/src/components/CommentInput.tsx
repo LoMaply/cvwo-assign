@@ -12,7 +12,8 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
 
   const { user } = useContext(AuthContext) as { user: User };
 
-  const [ inputValue, setInputValue ] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleInputChange = (event: { target: { value: SetStateAction<string>; }; }) => {
     setInputValue(event.target.value);
@@ -33,10 +34,11 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
         // Update thread with new info
         setChildTracker(childTracker + 1);
         setInputValue("");
+        setErrorMessage("");
       })
       .catch(error => console.log(error));
     } else {
-      alert("You are not logged in")
+      setErrorMessage("You must be logged in to post a comment!");
     }
   }
 
@@ -59,7 +61,10 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
             onChange={handleInputChange}
             required
           />
-          <Stack direction="row" justifyContent="end">
+          <Stack direction="row" spacing={2} justifyContent="end" alignItems="center">
+            <Typography color="red">
+              {errorMessage}
+            </Typography>
             <Button type="submit" variant="contained">Submit</Button>
           </Stack>
         </form>

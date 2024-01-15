@@ -1,12 +1,11 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormGroup, Stack, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from "react-router-dom";
 
 import AuthContext from "../context/AuthContext";
-import { User } from "../utils/Types";
-import { useNavigate } from "react-router-dom";
 import { authorizedinstance } from "../utils/AxiosInstance";
-import { ta } from "date-fns/locale";
+import { User } from "../utils/Types";
 
 
 /**

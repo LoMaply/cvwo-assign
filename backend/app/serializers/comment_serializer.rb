@@ -1,6 +1,6 @@
 class CommentSerializer
   include JSONAPI::Serializer
-  attributes :description, :id
+  attributes :description, :id, :created_at, :updated_at
 
   # Append username of User that created comment to request result
   attribute :username do |comment|

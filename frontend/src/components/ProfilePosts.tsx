@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { Discussion } from "../utils/Types";
-import { Box, Card, CardActionArea, CardContent, MenuItem, Pagination, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Card, CardActionArea, CardContent, MenuItem, Pagination, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
 import { formatDistanceToNowStrict } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import categories from "../utils/CategoryOptions";
+import { Discussion } from "../utils/Types";
 
 /**
  * Tab in Profile page displaying history of posts created by current logged in user.

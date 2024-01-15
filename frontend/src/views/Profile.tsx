@@ -3,9 +3,9 @@ import { useContext, useEffect, useState } from "react";
 
 import ProfileOptions from "../components/ProfileOptions";
 import ProfilePosts from "../components/ProfilePosts";
-import { Discussion, ResponseObject, User } from "../utils/Types";
 import AuthContext from "../context/AuthContext";
 import { axiosinstance } from "../utils/AxiosInstance";
+import { Discussion, ResponseObject, User } from "../utils/Types";
 
 
 interface TabPanelProps {
@@ -69,7 +69,7 @@ export default function Profile({ color }: { color: "primary" }) {
       setThreads(discussionList);
       console.log(response.data.data);
     })
-    .catch(response => console.log(response));
+    .catch(error => console.log(error));
   }
 
   
