@@ -34,34 +34,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     })
   }
 
-  // Registers new user
-  const registerUser = async (name: string) => {
-    await axiosinstance.post(`/api/users`, {
-      username: name
-    }).then(response => {
-      localStorage.setItem("token", JSON.stringify(response.data.token));
-      setUser(response.data.user);
-      console.log(response.data);
-    }).catch(error => {
-      console.log(error);
-      alert("Username is already taken (register)");
-    })
-  }
-
-  // Logs in user
-  const loginUser = async (name: string) => {
-    await axiosinstance.post(`/login`, {
-      username: name
-    }).then(response => {
-      localStorage.setItem("token", JSON.stringify(response.data.token));
-      setUser(response.data.user);
-      console.log(response.data);
-    }).catch(error => {
-      console.log(error);
-      alert("Invalid username");
-    });
-  };
-
   // Logs out user
   const logoutUser = () => {
     setUser(emptyUser);
@@ -92,8 +64,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const contextData = {
     user:user,
-    registerUser,
-    loginUser,
+    setUser,
     logoutUser,
     updateUser,
     deleteUser

@@ -82,7 +82,7 @@ function Home({ color }: { color: "primary" }) {
     <Paper elevation={10} sx={{ width: "75%", minHeight: "90vh", bgcolor: `${color}.light` }}>
       <Paper variant="outlined" sx={{ height: "6vh", marginBottom: "1vh" }}>
         <Stack spacing={1} direction="row" alignItems="center" sx={{ height: "100%", marginLeft: "0.5%", marginRight: "0.5%" }}>
-          <Button variant="contained" size="medium" sx={{ maxWidth: "11vw", borderRadius: "10px" }} startIcon={<CreateIcon />} onClick={newThread}>
+          <Button variant="contained" size="medium" sx={{ width: "100px", borderRadius: "10px" }} startIcon={<CreateIcon />} onClick={newThread}>
             Create
           </Button>
 
@@ -113,7 +113,7 @@ function Home({ color }: { color: "primary" }) {
             size="small"
             defaultValue="Newest"
             onChange={(event: SelectChangeEvent) => setSort(event.target.value)}
-            sx={{ width: "10vw" }}
+            sx={{ width: "110px" }}
           >
             <MenuItem value={"Newest"}>Newest</MenuItem>
             <MenuItem value={"Oldest"}>Oldest</MenuItem>
@@ -123,7 +123,7 @@ function Home({ color }: { color: "primary" }) {
             size="small"
             defaultValue="All"
             onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
-            sx={{ width: "10vw" }}
+            sx={{ width: "130px" }}
           >
             <MenuItem value={"All"}>All</MenuItem>
             {categories.map((item, i) => (<MenuItem value={item} key={i}>{item}</MenuItem>))}

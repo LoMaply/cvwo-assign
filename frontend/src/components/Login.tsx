@@ -1,16 +1,19 @@
-import { Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, FormGroup, TextField } from "@mui/material";
+import { Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, FormGroup, TextField, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
 
 import AuthContext from "../context/AuthContext";
+import { axiosinstance } from "../utils/AxiosInstance";
+import { User } from "../utils/Types";
 
 /**
  * Login button and dialog for login/account creation.
  */
 export default function Login() {
-  const { loginUser, registerUser } = useContext(AuthContext) as {loginUser: (name: string) => Promise<void>, registerUser: (name: string) => Promise<void>};
+  const { setUser } = useContext(AuthContext) as {setUser: React.Dispatch<React.SetStateAction<User>>};
 
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Handle opening/closing login dialog
   const handleOpen = () => {
@@ -20,6 +23,7 @@ export default function Login() {
   const handleClose = () => {
     setOpen(false);
     setChecked(false);
+    setErrorMessage("");
   }
 
   const handleChange = () => {
@@ -31,13 +35,40 @@ export default function Login() {
     const target = e.target as typeof e.target & {
       username: {value: string}
     }
-
     if (checked) {
       registerUser(target.username.value);
     } else {
       loginUser(target.username.value);
     }
   }
+
+  // Registers new user
+  const registerUser = async (name: string) => {
+    await axiosinstance.post(`/api/users`, {
+      username: name
+    }).then(response => {
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      setUser(response.data.user);
+      console.log(response.data);
+    }).catch(error => {
+      console.log(error);
+      setErrorMessage("This username is already taken!");
+    })
+  }
+
+  // Logs in user
+  const loginUser = async (name: string) => {
+    await axiosinstance.post(`/login`, {
+      username: name
+    }).then(response => {
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      setUser(response.data.user);
+      console.log(response.data);
+    }).catch(error => {
+      console.log(error);
+      setErrorMessage("Invalid username!");
+    });
+  };
 
   return (
     <>
@@ -56,6 +87,9 @@ export default function Login() {
               name="username" 
               label="Username"
             />
+            <Typography color="red">
+              {errorMessage}
+            </Typography>
             <FormGroup row sx={{ marginTop: "1vh" }}>
               <FormControlLabel 
                 control={

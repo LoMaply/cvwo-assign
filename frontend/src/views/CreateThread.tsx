@@ -1,6 +1,7 @@
-import { Box, Button, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, DialogTitle, IconButton, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CloseIcon from '@mui/icons-material/Close';
 
 import AuthContext from "../context/AuthContext";
 import { authorizedinstance } from "../utils/AxiosInstance";
@@ -15,6 +16,7 @@ export default function CreateThread() {
   const { user } = useContext(AuthContext) as { user: User };
 
   const [category, setCategory] = useState<string>(categories[0]);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -40,7 +42,7 @@ export default function CreateThread() {
       })
       .catch(error => console.error(error))
     } else {
-      alert("You are not logged in")
+      setShowDialog(true);
     }
   }
 
@@ -51,16 +53,24 @@ export default function CreateThread() {
         <Typography variant="h5" sx={{ width: "75%" }}>
           Create a post
         </Typography>
-
-        <TextField 
-          autoFocus
-          type="text"
-          name="title"
-          label="Title"
-          sx={{ width: "75%" }}
-          inputProps={{ maxLength: 300 }}
-          required
-        />
+        <Stack direction="row" alignItems="center" spacing={2} sx={{ width: "75%" }}>
+          <TextField 
+            autoFocus
+            type="text"
+            name="title"
+            label="Title"
+            sx={{ width: "75%" }}
+            inputProps={{ maxLength: 300 }}
+            required
+          />
+          <Select
+            defaultValue={categories[0]}
+            onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
+            sx={{ width: "20%", minWidth: "130px" }}
+          >
+            {categories.map((item, i) => (<MenuItem value={item} key={i}>{item}</MenuItem>))}
+          </Select>
+        </Stack>
         <TextField 
           multiline
           minRows={9}
@@ -71,17 +81,24 @@ export default function CreateThread() {
           sx={{ width: "75%" }}
         />
 
-        <Stack direction="row" justifyContent="center" sx={{ width: "75%" }}>
-          <Select
-            defaultValue={categories[0]}
-            onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
-            sx={{ width: "25%", minWidth: "170px" }}
-          >
-            {categories.map((item, i) => (<MenuItem value={item} key={i}>{item}</MenuItem>))}
-          </Select>
-          <Button type="submit">Submit</Button>
+        <Stack direction="row" justifyContent="flex-end" sx={{ width: "75%" }}>
+          
+          <Button type="submit" variant="contained" size="medium">Submit</Button>
         </Stack>
       </Stack>
+
+      <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
+        <Stack direction="row" alignItems="center">
+          <DialogTitle>
+            <Typography color="red">
+              You must be logged in to create a post!
+            </Typography>
+            </DialogTitle>
+            <IconButton onClick={() => setShowDialog(false)} sx={{ color: (theme) => theme.palette.grey[500] }}>          
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+      </Dialog>
     </Paper>
   );
 }
