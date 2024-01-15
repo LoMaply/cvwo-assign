@@ -2,6 +2,7 @@ import { Box, Card, CardActionArea, CardContent, Stack, Typography } from "@mui/
 import { useNavigate } from "react-router-dom";
 
 import { Discussion } from "../utils/Types";
+import { formatDistanceToNowStrict } from "date-fns";
 
 /**
  * Component for displaying threads in main page.
@@ -14,7 +15,7 @@ export default function ThreadList({list} : {list: Array<Discussion>}) {
   // Generate custom thread url and forwards thread data to ViewThread page.
   const viewThread = (item: Discussion) => {
     const urlBack = item.title.toLowerCase().replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '').split(" ").splice(0, 9).join("_");
-    navigate(`/thread/${item.username}/${urlBack}`, {state:{discussionid: item.id}});
+    navigate(`/thread/${item.id}/${urlBack}`);
   }
 
   return (
@@ -24,7 +25,7 @@ export default function ThreadList({list} : {list: Array<Discussion>}) {
           <CardActionArea onClick={() => viewThread(item)}>
             <CardContent>
               <Typography variant="subtitle2">
-                Posted by {item.username}
+                Posted by {item.username} {formatDistanceToNowStrict(new Date(item.created_at))} ago
               </Typography>
               <Typography gutterBottom variant="h6">
                 {item.title}

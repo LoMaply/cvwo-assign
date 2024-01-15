@@ -20,7 +20,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   // Automatically logs in user based on token from localStorage
   const loadUser = async (token: string) => {
-    axiosinstance.post(`/load`, {
+    await axiosinstance.post(`/load`, {
       token: token
     }).then(response => {
       const user: User = response.data.user;
@@ -36,7 +36,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   // Registers new user
   const registerUser = async (name: string) => {
-    axiosinstance.post(`/api/users`, {
+    await axiosinstance.post(`/api/users`, {
       username: name
     }).then(response => {
       localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -50,7 +50,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   // Logs in user
   const loginUser = async (name: string) => {
-    axiosinstance.post(`/login`, {
+    await axiosinstance.post(`/login`, {
       username: name
     }).then(response => {
       localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -70,7 +70,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   // Updates username
   const updateUser = async (token: string, name: string) => {
-    authorizedinstance(token).patch(`/api/users/${user.id}`, {
+    await authorizedinstance(token).patch(`/api/users/${user.id}`, {
       username: name
     }).then(response => {
       localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -84,7 +84,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   // Delete user
   const deleteUser = async (token: string) => {
-    authorizedinstance(token).delete(`/api/users/${user.id}`).then(response => console.log(response.data)).catch(error => console.log(error));
+    await authorizedinstance(token).delete(`/api/users/${user.id}`).then(response => console.log(response.data)).catch(error => console.log(error));
     setUser(emptyUser);
     localStorage.clear();
   }

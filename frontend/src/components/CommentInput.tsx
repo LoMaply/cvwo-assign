@@ -53,14 +53,14 @@ export default function CommentInput({childTracker, setChildTracker, discussioni
             maxRows={3}
             type="text"
             name="description"
-            label="Text (optional)"
-            sx={{ width: "100%" }}
+            label="Text"
+            sx={{ width: "100%", marginBottom: "4px" }}
             value={inputValue}
             onChange={handleInputChange}
             required
           />
           <Stack direction="row" justifyContent="end">
-            <Button type="submit">Submit</Button>
+            <Button type="submit" variant="contained">Submit</Button>
           </Stack>
         </form>
       </CardContent>

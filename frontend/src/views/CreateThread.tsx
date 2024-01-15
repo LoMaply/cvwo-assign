@@ -45,7 +45,7 @@ export default function CreateThread() {
   }
 
   return (
-    <Paper elevation={10} sx={{ width: "75%", height: "80vh" }}>
+    <Paper elevation={10} sx={{ width: "75%", height: "90vh" }}>
       <Stack spacing={1} alignItems="center" component="form" onSubmit={handleSubmit}>
         <Box sx={{ height: "10vh" }}/>
         <Typography variant="h5" sx={{ width: "75%" }}>
@@ -64,7 +64,7 @@ export default function CreateThread() {
         <TextField 
           multiline
           minRows={9}
-          maxRows={20}
+          maxRows={15}
           type="text"
           name="description"
           label="Text (optional)"
