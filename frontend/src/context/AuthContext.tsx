@@ -27,7 +27,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       // Fix issue where null user may be returned when localStorage contains invalid token
       if (user != null) {
         setUser(response.data.user);
-        console.log(response.data.user)
       }
     }).catch(error => {
       console.log(error);

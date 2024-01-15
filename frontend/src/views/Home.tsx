@@ -57,7 +57,6 @@ function Home({ color }: { color: "primary" }) {
       const discussionList: Array<Discussion> = response.data.data.map((thread:ResponseObject) => (thread.attributes as Discussion));
       setThreads(discussionList);
       setVisible(discussionList.sort((a:Discussion, b:Discussion) => (new Date(b.created_at).getTime() - new Date(a.created_at).getTime())));
-      console.log(response.data.data);
     })
     .catch(response => console.log(response));
   }

@@ -49,7 +49,6 @@ export default function Login() {
     }).then(response => {
       localStorage.setItem("token", JSON.stringify(response.data.token));
       setUser(response.data.user);
-      console.log(response.data);
     }).catch(error => {
       console.log(error);
       setErrorMessage("This username is already taken!");
@@ -63,7 +62,6 @@ export default function Login() {
     }).then(response => {
       localStorage.setItem("token", JSON.stringify(response.data.token));
       setUser(response.data.user);
-      console.log(response.data);
     }).catch(error => {
       console.log(error);
       setErrorMessage("Invalid username!");

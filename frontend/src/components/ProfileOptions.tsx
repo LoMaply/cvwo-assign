@@ -38,7 +38,6 @@ export default function ProfileOptions() {
       setUser(response.data.user);
       setErrorMessage("");
       navigate("/");
-      console.log(response.data);
     }).catch(error => {
       console.log(error);
       setErrorMessage("This username is already taken!");
