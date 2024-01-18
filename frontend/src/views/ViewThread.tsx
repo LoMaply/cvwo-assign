@@ -28,14 +28,17 @@ export default function ViewThread({ color }: { color: "primary" }) {
   const { discussionid } = useParams();
 
   useEffect(() => {
-    axiosinstance.get(`/api/discussions/${discussionid}`)
+    updateThread();
+  }, [childTracker]);
+
+  const updateThread = async () => {
+    await axiosinstance.get(`/api/discussions/${discussionid}`)
     .then(response => {
       setThreadData(response.data.data.attributes);
       setCommentList(response.data.included.map((item: ResponseObject) => item.attributes));
     })
     .catch(error => console.log(error));
-  }, [childTracker]);
-
+  }
 
   // Get current logged in user if existing
   let token = "";
