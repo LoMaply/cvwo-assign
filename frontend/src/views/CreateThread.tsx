@@ -53,7 +53,7 @@ export default function CreateThread() {
         <Typography variant="h5" sx={{ width: "75%" }}>
           Create a post
         </Typography>
-        <Stack direction="row" alignItems="center" spacing={2} sx={{ width: "75%" }}>
+        <Stack direction="row" alignItems="center" spacing={1} sx={{ width: "75%" }}>
           <TextField 
             autoFocus
             type="text"
@@ -66,7 +66,7 @@ export default function CreateThread() {
           <Select
             defaultValue={categories[0]}
             onChange={(event: SelectChangeEvent) => setCategory(event.target.value)}
-            sx={{ width: "20%", minWidth: "130px" }}
+            sx={{ width: "25%", minWidth: "130px" }}
           >
             {categories.map((item, i) => (<MenuItem value={item} key={i}>{item}</MenuItem>))}
           </Select>
