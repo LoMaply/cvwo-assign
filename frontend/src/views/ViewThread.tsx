@@ -1,4 +1,5 @@
-import { Box, Button, Card, CardActions, CardContent, Paper, Stack, TextField, Typography } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Button, Card, CardActions, CardContent, Dialog, DialogContent, DialogContentText, DialogTitle, Paper, Stack, TextField, Typography } from "@mui/material";
 import { formatDistanceToNowStrict } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,6 +21,9 @@ export default function ViewThread({ color }: { color: "primary" }) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [threadData, setThreadData] = useState<Discussion>(emptyDiscussion);
   const [commentList, setCommentList] = useState<Array<Reply>>([]);
+
+  // Dialog for delete confirmation
+  const [open, setOpen] = useState<boolean>(false);
 
   // Allows children components to trigger useEffect below, which updates thread data and comment list
   const [childTracker, setChildTracker] = useState<number>(0);
@@ -81,7 +85,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
   const userOptions = (
     <CardActions>
       <Button onClick={() => setIsEditing(true)}>Edit</Button>
-      <Button onClick={handleDelete}>Delete</Button>
+      <Button onClick={() => setOpen(true)}>Delete</Button>
     </CardActions>
   );
 
@@ -91,7 +95,7 @@ export default function ViewThread({ color }: { color: "primary" }) {
       return (
         <CardContent>
           <form onSubmit={handleEdit}>
-            <Stack spacing={1} alignItems="center">
+            <Stack spacing={1}>
               <TextField 
                 autoFocus
                 type="text"
@@ -112,9 +116,9 @@ export default function ViewThread({ color }: { color: "primary" }) {
                 defaultValue={threadData.description}
                 sx={{ width: "99%" }}
               />
-              <Stack direction="row">
-                <Button type="submit">Save</Button>
-                <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+              <Stack direction="row" spacing={1}>
+                <Button type="submit" variant="contained">Save</Button>
+                <Button variant="outlined" onClick={() => setIsEditing(false)}>Cancel</Button>
               </Stack>
             </Stack>
           </form>
@@ -141,6 +145,17 @@ export default function ViewThread({ color }: { color: "primary" }) {
   
   return (
     <Paper elevation={10} sx={{ width: "75%", minHeight: "90vh", bgcolor: `${color}.light`}}>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Delete Post?</DialogTitle>
+        <DialogContent>
+          <DialogContentText gutterBottom>
+            This action is irreversible and will delete all comments associated with this post.
+          </DialogContentText>
+          <Button type="submit" variant="contained" size="small" color="error" startIcon={<DeleteIcon />} sx={{ marginRight: "1vw" }} onClick={handleDelete}>Confirm</Button>
+          <Button type="button" variant="outlined" size="small" onClick={() => setOpen(false)}>Cancel</Button>
+        </DialogContent>
+      </Dialog>
+
       <Stack spacing={2} alignItems="center">
         <Box sx={{ height: "1vh" }}/>
 
