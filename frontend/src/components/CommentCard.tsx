@@ -68,12 +68,12 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
               name="description"
               label="Text"
               defaultValue={comment.description}
-              sx={{ width: "99%" }}
+              sx={{ width: "99%", marginBottom: "4px" }}
               required
             />
-            <Stack direction="row">
-              <Button type="submit">Save</Button>
-              <Button onClick={() => setIsEditing(false)}>Cancel</Button>
+            <Stack direction="row" spacing={0.5}>
+              <Button type="submit" variant="contained">Save</Button>
+              <Button variant="outlined" onClick={() => setIsEditing(false)}>Cancel</Button>
             </Stack>
           </form>
         </CardContent>
