@@ -31,7 +31,7 @@ export default function HeaderOptions() {
   const navigate = useNavigate();
   const handleProfile = () => {
     handleClose();
-    navigate("/Profile");
+    navigate("/profile");
   }
 
   // Display changes depending on status of authentication
