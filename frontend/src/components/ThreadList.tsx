@@ -21,7 +21,7 @@ export default function ThreadList({list} : {list: Array<Discussion>}) {
   return (
     <Stack spacing={1} alignItems="center">
       {list.map((item:Discussion, i) => (
-        <Card key={i} variant="outlined" sx={{ width: "98%", maxHeight: "30vh" }}>
+        <Card key={i} sx={{ width: "98%", maxHeight: "30vh" }}>
           <CardActionArea onClick={() => viewThread(item)}>
             <CardContent>
               <Typography variant="subtitle2">

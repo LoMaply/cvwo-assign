@@ -96,7 +96,7 @@ export default function CommentCard({comment, childTracker, setChildTracker}: {c
   }
 
   return (
-    <Card variant="outlined" sx={{ width: "98%" }}>
+    <Card sx={{ width: "98%" }}>
       {content()}
     </Card>
   );
