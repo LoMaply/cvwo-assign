@@ -39,7 +39,8 @@ export default function ViewThread({ color }: { color: "primary" }) {
     await axiosinstance.get(`/api/discussions/${discussionid}`)
     .then(response => {
       setThreadData(response.data.data.attributes);
-      setCommentList(response.data.included.map((item: ResponseObject) => item.attributes));
+      const commentList = response.data.included.map((item: ResponseObject) => item.attributes);
+      setCommentList(commentList.sort((a:Reply, b:Reply) => (new Date(b.created_at).getTime() - new Date(a.created_at).getTime())));
     })
     .catch(error => console.log(error));
   }
