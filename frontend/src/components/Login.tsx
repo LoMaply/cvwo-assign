@@ -86,6 +86,7 @@ export default function Login() {
               variant="filled" 
               name="username" 
               label="Username"
+              autoComplete="off"
             />
             <Typography color="red">
               {errorMessage}
