@@ -62,6 +62,7 @@ export default function ProfileOptions() {
               size="small"
               type="text"
               name="username"
+              autoComplete="off"
               defaultValue={user.username}
             />
             <Button type="submit" variant="contained" size="small" sx={{ marginLeft: "10px" }}>Update</Button>
